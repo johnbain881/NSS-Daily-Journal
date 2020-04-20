@@ -10,3 +10,7 @@ fieldset {
     display: flex;
     flex-direction: column;
 }
+#journalEntries {
+    display: flex;
+    flex-direction: column;
+}

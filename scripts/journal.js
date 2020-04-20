@@ -27,3 +27,19 @@ const journalEntry2 = {
 
 entries.push(journalEntry2);
 console.log(entries)
+
+
+function getJournalEntry(){
+    let newJournalEntry = {
+        date: "",
+        entryTitle: "",
+        entry : "",
+        mood: ""
+    };
+    newJournalEntry.date = document.getElementById('journalDate').value;
+    newJournalEntry.entryTitle = document.getElementById('entryTitle').value;
+    newJournalEntry.entry = document.getElementById('journalEntry').value;
+    newJournalEntry.mood = document.getElementById('journalMood').value;
+
+    document.getElementById('journalEntries').innerHTML += `<h1>${newJournalEntry.entryTitle}</h1><p>${newJournalEntry.entry}</p><p>${newJournalEntry.date}</p>`
+}
