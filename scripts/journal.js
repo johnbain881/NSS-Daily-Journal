@@ -41,5 +41,18 @@ function getJournalEntry(){
     newJournalEntry.entry = document.getElementById('journalEntry').value;
     newJournalEntry.mood = document.getElementById('journalMood').value;
 
-    document.getElementById('journalEntries').innerHTML += `<h1>${newJournalEntry.entryTitle}</h1><p>${newJournalEntry.entry}</p><p>${newJournalEntry.date}</p>`
+    displayJournalEntry(newJournalEntry)
 }
+
+function displayJournalEntry(object){
+    document.getElementById('journalEntries').innerHTML += `<h1>${object.entryTitle}</h1><p>${object.entry}</p><p>${object.date}</p>`
+}
+
+
+
+
+fetch("http://localhost:3000/entries")
+.then(object => object.json())
+.then(entryArray => {
+    entryArray.forEach(entry => {displayJournalEntry(entry)})
+    })
