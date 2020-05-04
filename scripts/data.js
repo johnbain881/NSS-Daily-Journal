@@ -1,18 +1,25 @@
 import displayJournalEntry from "./entriesDOM.js";
 
-function getJournalEntry(){
-    let newJournalEntry = {
-        date: "",
-        entryTitle: "",
-        entry : "",
-        mood: ""
-    };
-    newJournalEntry.date = document.getElementById('journalDate').value;
-    newJournalEntry.entryTitle = document.getElementById('entryTitle').value;
-    newJournalEntry.entry = document.getElementById('journalEntry').value;
-    newJournalEntry.mood = document.getElementById('journalMood').value;
-
+function getJournalEntry() {
+    let newJournalEntry = createJournalEntry(document.getElementById('journalDate').value, document.getElementById('entryTitle').value, document.getElementById('journalEntry').value, document.getElementById('journalMood').value);
+    console.log(newJournalEntry)
+    if (newJournalEntry === "") {return}
     displayJournalEntry.displayJournalEntry(newJournalEntry)
+    API.postJournalEntries(newJournalEntry)
+}
+
+function createJournalEntry (date, entryTitle, entry, mood) {
+    if (date === "" || entryTitle === "" || entry === "" || mood === "" ) {
+        console.log("Must fill out all forms")
+        alert("Must fill out all forms")
+        return ""
+    }
+    return {
+        date: date,
+        entryTitle: entryTitle,
+        entry : entry,
+        mood: mood
+    }
 }
 
 document.getElementById("get-journal-entry").addEventListener("click", () => {
@@ -52,6 +59,15 @@ const API = {
     getJournalEntries: function () {
         return fetch("http://localhost:3000/entries")
             .then(response => response.json())
+    },
+    postJournalEntries: function (newJournalEntry) {
+        fetch("http://localhost:3000/entries", { // Replace "url" with your API's URL
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newJournalEntry)
+})
     }
 }
 
