@@ -1,17 +1,21 @@
-entries.push(journalEntry);
-entries.push(journalEntry1);
-entries.push(journalEntry2);
-console.log(entries);
+import displayJournalEntry from "./entriesDOM.js";
+import API from "./data.js"
+
+
+API.entries.push(API.journalEntry);
+API.entries.push(API.journalEntry1);
+API.entries.push(API.journalEntry2);
+console.log(API.entries);
 
 
 
-API.getJournalEntries().then(entryArray => {
+API.API.getJournalEntries().then(entryArray => {
     entryArray.forEach(entry => {
-        entries.push(entry)
+        API.entries.push(entry)
         console.log(entry)
     })
-    entries.forEach(entry => {
-        displayJournalEntry(entry)
+    API.entries.forEach(entry => {
+        displayJournalEntry.displayJournalEntry(entry)
     })
-    console.log(entries)
+    console.log(API.entries)
     })

@@ -1,3 +1,4 @@
+import displayJournalEntry from "./entriesDOM.js";
 
 function getJournalEntry(){
     let newJournalEntry = {
@@ -11,8 +12,12 @@ function getJournalEntry(){
     newJournalEntry.entry = document.getElementById('journalEntry').value;
     newJournalEntry.mood = document.getElementById('journalMood').value;
 
-    displayJournalEntry(newJournalEntry)
+    displayJournalEntry.displayJournalEntry(newJournalEntry)
 }
+
+document.getElementById("get-journal-entry").addEventListener("click", () => {
+    getJournalEntry();
+})
 
 let entries = [];
 
@@ -49,3 +54,6 @@ const API = {
             .then(response => response.json())
     }
 }
+
+
+export default {API, entries, journalEntry, journalEntry1, journalEntry2}
