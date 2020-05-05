@@ -8,7 +8,7 @@ function getJournalEntry() {
         displayJournalEntry.displayJournalEntry(newJournalEntry)
         API.postJournalEntries(newJournalEntry)
     } else {
-        alert("Please fill in all of the forms, or stop using illegal characters")
+        alert("Please fill in all of the forms, or stop using illegal characters \nInput must be under 140 characters \nBe sure to watch your language")
     }
 }
 
@@ -22,10 +22,15 @@ function createJournalEntry (date, entryTitle, entry, mood) {
 }
 
 function isValidInput(object) {
-    let regex = /^[\w(){}\-:;\s]+$/;
-    if (regex.test(object.entryTitle)) {
-        if (regex.test(object.entry)) {
-            return regex.test(object.date)
+    let regex = /^[\w(){}\-:;\s]{1,140}$/;
+    let cussRegex = /(fuck|shit|bitch|ass)/;
+    if (!cussRegex.test(object.entryTitle)) {
+        if (!cussRegex.test(object.entry)) {
+            if (regex.test(object.entryTitle)) {
+                if (regex.test(object.entry)) {
+                    return regex.test(object.date)
+                }
+            }
         }
     }
     return false
@@ -58,11 +63,6 @@ const journalEntry2 = {
     mood: "Tired"
 }
 
-// fetch("http://localhost:3000/entries")
-// .then(object => object.json())
-// .then(entryArray => {
-//     entryArray.forEach(entry => {entries.push(entry)})
-//     })
 
 const API = {
     getJournalEntries: function () {
@@ -70,7 +70,7 @@ const API = {
             .then(response => response.json())
     },
     postJournalEntries: function (newJournalEntry) {
-        fetch("http://localhost:3000/entries", { // Replace "url" with your API's URL
+        fetch("http://localhost:3000/entries", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
