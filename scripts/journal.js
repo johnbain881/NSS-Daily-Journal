@@ -1,5 +1,8 @@
 import displayJournalEntry from "./entriesDOM.js";
 import API from "./data.js"
+import buildForm from "./buildForm.js"
+
+buildForm.buildForm()
 
 API.entries.push(API.journalEntry);
 API.entries.push(API.journalEntry1);
