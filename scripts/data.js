@@ -3,23 +3,32 @@ import displayJournalEntry from "./entriesDOM.js";
 function getJournalEntry() {
     let newJournalEntry = createJournalEntry(document.getElementById('journalDate').value, document.getElementById('entryTitle').value, document.getElementById('journalEntry').value, document.getElementById('journalMood').value);
     console.log(newJournalEntry)
-    if (newJournalEntry === "") {return}
-    displayJournalEntry.displayJournalEntry(newJournalEntry)
-    API.postJournalEntries(newJournalEntry)
+    if (isValidInput(newJournalEntry)) {
+        console.log(isValidInput(newJournalEntry))
+        displayJournalEntry.displayJournalEntry(newJournalEntry)
+        API.postJournalEntries(newJournalEntry)
+    } else {
+        alert("Please fill in all of the forms, or stop using illegal characters")
+    }
 }
 
 function createJournalEntry (date, entryTitle, entry, mood) {
-    if (date === "" || entryTitle === "" || entry === "" || mood === "" ) {
-        console.log("Must fill out all forms")
-        alert("Must fill out all forms")
-        return ""
-    }
     return {
         date: date,
         entryTitle: entryTitle,
         entry : entry,
         mood: mood
     }
+}
+
+function isValidInput(object) {
+    let regex = /^[\w(){}\-:;\s]+$/;
+    if (regex.test(object.entryTitle)) {
+        if (regex.test(object.entry)) {
+            return regex.test(object.date)
+        }
+    }
+    return false
 }
 
 document.getElementById("get-journal-entry").addEventListener("click", () => {
