@@ -18,3 +18,24 @@ API.API.getJournalEntries().then(entryArray => {
         displayJournalEntry.displayJournalEntry(entry)
     })
     })
+document.getElementById("journalEntries").addEventListener("click", () => {
+    console.log("clicked")
+    console.log(event)
+    if (event.target.localName === "button") {
+        API.API.deleteJournalEntry(event.target.parentNode.id)
+        event.target.parentNode.remove()
+    }
+})
+document.getElementsByName("Mood").forEach(element => {
+    element.addEventListener("click", () => {
+        document.getElementById('journalEntries').innerHTML = ""
+        API.API.getJournalEntriesByMood(element.value)
+        .then(entryArray => {
+            API.entries = [];
+            entryArray.forEach(entry => {
+                API.entries.push(entry)
+                displayJournalEntry.displayJournalEntry(entry)
+            })
+        })
+    })
+})

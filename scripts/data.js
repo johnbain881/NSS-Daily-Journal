@@ -43,21 +43,21 @@ document.getElementById("get-journal-entry").addEventListener("click", () => {
 let entries = [];
 
 const journalEntry = {
-    date: "4/17/20",
+    date: "4-17-20",
     entryTitle: "JavaScript",
     entry: "We have officially started JavaScript!",
     mood: "Happy"
 }
 
 const journalEntry1 = {
-    date: "4/17/20",
+    date: "4-17-20",
     entryTitle: "Finally!",
     entry: "I have been anticipating starting JavaScript, because it is so much fun!",
     mood: "Motivated"
 }
 
 const journalEntry2 = {
-    date: "4/17/20",
+    date: "4-17-20",
     entryTitle: "Long Day",
     entry: "I woke up pretty early this morning, and I'm pretty tired.",
     mood: "Tired"
@@ -76,6 +76,19 @@ const API = {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(newJournalEntry)
+})
+    },
+    getJournalEntriesByMood: function (mood) {
+        return fetch(`http://localhost:3000/entries?mood=${mood}`)
+            .then(response => response.json())
+    },
+    deleteJournalEntry: function (id) {
+        fetch(`http://localhost:3000/entries/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: ""
 })
     }
 }
