@@ -24,23 +24,16 @@
     {
       "date": "2020-05-06",
       "entryTitle": "JSON",
-      "entry": "We learned",
+      "entry": "We learned some JSON today and it was pretty cool",
       "mood": "Happy",
       "id": 4
     },
     {
-      "date": "2020-05-13",
-      "entryTitle": "asdf",
-      "entry": "asdf",
-      "mood": "Happy",
+      "date": "2020-05-19",
+      "entryTitle": "PUT",
+      "entry": "I am trying to learn put today",
+      "mood": "Funny",
       "id": 5
-    },
-    {
-      "date": "2020-05-13",
-      "entryTitle": "asdf",
-      "entry": "asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasfd",
-      "mood": "Happy",
-      "id": 6
     }
   ]
 }

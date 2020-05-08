@@ -12,12 +12,13 @@ function getJournalEntry() {
     }
 }
 
-function createJournalEntry (date, entryTitle, entry, mood) {
+function createJournalEntry (date, entryTitle, entry, mood, id=undefined) {
     return {
         date: date,
         entryTitle: entryTitle,
         entry : entry,
-        mood: mood
+        mood: mood,
+        id: id
     }
 }
 
@@ -36,8 +37,39 @@ function isValidInput(object) {
     return false
 }
 
+function putJournalEntry(id) {
+    let newJournalEntry = createJournalEntry(document.getElementById('journalDate').value, document.getElementById('entryTitle').value, document.getElementById('journalEntry').value, document.getElementById('journalMood').value, document.getElementById('idValue').value);
+    console.log(newJournalEntry)
+    if (isValidInput(newJournalEntry)) {
+        displayJournalEntry.displayJournalEntry(newJournalEntry)
+        API.putJournalEntries(newJournalEntry, id)
+            document.getElementById('journalDate').value = "";
+            document.getElementById('entryTitle').value = "";
+            document.getElementById('journalEntry').value = "";
+            document.getElementById('journalMood').value = "Happy";
+            document.getElementById('idValue').value = "";
+    } else {
+        alert("Please fill in all of the forms, or stop using illegal characters \nInput must be under 140 characters \nBe sure to watch your language")
+    }
+}
+
+function fillForm(id) {
+    API.getJournalEntries(id)
+    .then(object => {
+        document.getElementById('journalDate').value = object.date;
+        document.getElementById('entryTitle').value = object.entryTitle;
+        document.getElementById('journalEntry').value = object.entry;
+        document.getElementById('journalMood').value = object.mood;
+        document.getElementById('idValue').value = id;
+    })
+}
+
 document.getElementById("get-journal-entry").addEventListener("click", () => {
+    if (document.getElementById("idValue").value === ""){
     getJournalEntry();
+    } else {
+        putJournalEntry(document.getElementById("idValue").value);
+    } 
 })
 
 let entries = [];
@@ -65,8 +97,8 @@ const journalEntry2 = {
 
 
 const API = {
-    getJournalEntries: function () {
-        return fetch("http://localhost:3000/entries")
+    getJournalEntries: function (id="") {
+        return fetch(`http://localhost:3000/entries/${id}`)
             .then(response => response.json())
     },
     postJournalEntries: function (newJournalEntry) {
@@ -90,8 +122,18 @@ const API = {
             },
             body: ""
 })
+    },
+    putJournalEntries: function (newJournalEntry, id) {
+        fetch(`http://localhost:3000/entries/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newJournalEntry)
+})
     }
+
 }
 
 
-export default {API, entries, journalEntry, journalEntry1, journalEntry2}
+export default {API, entries, journalEntry, journalEntry1, journalEntry2, fillForm}

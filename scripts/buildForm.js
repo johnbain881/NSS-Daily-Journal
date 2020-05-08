@@ -1,6 +1,7 @@
 function buildForm() {
     document.getElementById("form-to-build").innerHTML = 
     `<fieldset>
+    <input type="text" name="idValue" id="idValue" class="hidden">
     <label for="journalDate">Date of entry</label>
     <input type="date" name="journalDate" id="journalDate">
 </fieldset>

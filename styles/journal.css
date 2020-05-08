@@ -1,5 +1,6 @@
 div {
     display: flex;
+    flex-direction: column;
 }
 form {
     display: flex;
@@ -13,6 +14,9 @@ fieldset {
 #journalEntries {
     display: flex;
     flex-direction: column;
+}
+.hidden {
+  display: none;
 }
 
 /* {

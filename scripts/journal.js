@@ -18,14 +18,21 @@ API.API.getJournalEntries().then(entryArray => {
         displayJournalEntry.displayJournalEntry(entry)
     })
     })
+
 document.getElementById("journalEntries").addEventListener("click", () => {
-    console.log("clicked")
     console.log(event)
-    if (event.target.localName === "button") {
+    if (event.target.localName === "button" && event.target.innerHTML === "delete") {
         API.API.deleteJournalEntry(event.target.parentNode.id)
         event.target.parentNode.remove()
     }
+    if (event.target.localName === "button" && event.target.innerHTML === "edit") {
+        console.log(event.target.parentNode.id)
+        API.fillForm(event.target.parentNode.id)
+        event.target.parentNode.remove()
+        
+    }
 })
+
 document.getElementsByName("Mood").forEach(element => {
     element.addEventListener("click", () => {
         document.getElementById('journalEntries').innerHTML = ""
