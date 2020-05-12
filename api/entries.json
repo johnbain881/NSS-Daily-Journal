@@ -31,9 +31,16 @@
     {
       "date": "2020-05-19",
       "entryTitle": "PUT",
-      "entry": "I am trying to learn put today",
+      "entry": "I am trying to learn PUT today",
       "mood": "Funny",
       "id": 5
+    },
+    {
+      "date": "2020-05-05",
+      "entryTitle": "asdf",
+      "entry": "asdf",
+      "mood": "Happy",
+      "id": 6
     }
   ]
 }

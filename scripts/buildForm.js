@@ -27,7 +27,8 @@ function buildForm() {
 
 `
 document.getElementById("other-form-to-build").innerHTML = `
-<fieldset>
+<div id="entriesSort">
+<fieldset id="moodFilter">
 <legend>
 Filter Journal Entries By Mood
 </legend>
@@ -44,6 +45,13 @@ Filter Journal Entries By Mood
     <input type="radio" id="Gloomy" name="Mood" class="Mood" value="Gloomy">
     <label for="Gloomy">Gloomy</label>
 </fieldset>
+<fieldset>
+<legend>
+    Search Journal Entries
+</legend>
+    <input type="text" name="searchInput" id="searchInput">
+</fieldset>
+</div>
 `
 
 }

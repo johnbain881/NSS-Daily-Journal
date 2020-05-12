@@ -46,3 +46,35 @@ document.getElementsByName("Mood").forEach(element => {
         })
     })
 })
+
+document.getElementById("searchInput").addEventListener("keypress", () => {
+    // event.preventDefault()
+    // console.log(event)
+    let input = event.target.value;
+    if(event.key === "Enter") {
+        event.preventDefault()
+        console.log("He hit enter")
+        API.API.getJournalEntries()
+        .then(object => {
+            // console.log(object)
+            document.getElementById('journalEntries').innerHTML = ""
+            for (const values of Object.values(object)) {
+                let shouldDisplay = false
+                for (const value of Object.values(values)) {
+                    let newValue = `${value}`
+                    // console.log(value)
+                    // console.log(newValue)
+                    // console.log(newValue.includes(input))
+                    if (newValue.includes(input)) {
+                        shouldDisplay = true
+                    }
+                }
+                if (shouldDisplay) {
+                    displayJournalEntry.displayJournalEntry(values)
+                }
+            }
+
+        })
+    }
+
+})

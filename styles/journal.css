@@ -18,7 +18,14 @@ fieldset {
 .hidden {
   display: none;
 }
-
+#entriesSort {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#entriesSort fieldset {
+  width: 40%;
+}
 /* {
   "entries": [
     {
