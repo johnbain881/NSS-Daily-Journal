@@ -12,12 +12,12 @@ function getJournalEntry() {
     }
 }
 
-function createJournalEntry (date, entryTitle, entry, mood, id=undefined) {
+function createJournalEntry (date, entryTitle, entry, moodId, id=undefined) {
     return {
         date: date,
         entryTitle: entryTitle,
         entry : entry,
-        mood: mood,
+        moodId: parseInt(moodId),
         id: id
     }
 }
@@ -38,6 +38,7 @@ function isValidInput(object) {
 }
 
 function putJournalEntry(id) {
+    console.log(parseInt(document.getElementById('journalMood').value))
     let newJournalEntry = createJournalEntry(document.getElementById('journalDate').value, document.getElementById('entryTitle').value, document.getElementById('journalEntry').value, document.getElementById('journalMood').value, document.getElementById('idValue').value);
     console.log(newJournalEntry)
     if (isValidInput(newJournalEntry)) {
@@ -59,7 +60,7 @@ function fillForm(id) {
         document.getElementById('journalDate').value = object.date;
         document.getElementById('entryTitle').value = object.entryTitle;
         document.getElementById('journalEntry').value = object.entry;
-        document.getElementById('journalMood').value = object.mood;
+        document.getElementById('journalMood').value = object.moodId;
         document.getElementById('idValue').value = id;
     })
 }
@@ -98,7 +99,7 @@ const journalEntry2 = {
 
 const API = {
     getJournalEntries: function (id="") {
-        return fetch(`http://localhost:3000/entries/${id}`)
+        return fetch(`http://localhost:3000/entries/${id}?_expand=mood`)
             .then(response => response.json())
     },
     postJournalEntries: function (newJournalEntry) {
@@ -110,8 +111,8 @@ const API = {
             body: JSON.stringify(newJournalEntry)
 })
     },
-    getJournalEntriesByMood: function (mood) {
-        return fetch(`http://localhost:3000/entries?mood=${mood}`)
+    getJournalEntriesByMood: function (moodId) {
+        return fetch(`http://localhost:3000/moods/${moodId}?_embed=entries`)
             .then(response => response.json())
     },
     deleteJournalEntry: function (id) {
@@ -131,9 +132,79 @@ const API = {
             },
             body: JSON.stringify(newJournalEntry)
 })
+    },
+    getJournalMoods: function () {
+        return fetch(`http://localhost:3000/moods`)
+            .then(response => response.json())
     }
 
 }
 
 
-export default {API, entries, journalEntry, journalEntry1, journalEntry2, fillForm}
+
+document.getElementById("journalEntries").addEventListener("click", () => {
+    // console.log(event)
+    if (event.target.localName === "button" && event.target.innerHTML === "delete") {
+        API.deleteJournalEntry(event.target.parentNode.id)
+        event.target.parentNode.remove()
+    }
+    if (event.target.localName === "button" && event.target.innerHTML === "edit") {
+        // console.log(event.target.parentNode.id)
+        fillForm(event.target.parentNode.id)
+        event.target.parentNode.remove()
+        
+    }
+})
+
+function addMoodSortEventListener(){
+    document.getElementsByName("Mood").forEach(element => {
+        element.addEventListener("click", () => {
+            document.getElementById('journalEntries').innerHTML = ""
+            API.getJournalEntriesByMood(element.value)
+            .then(entryArray => {
+                console.log(entryArray)
+                entries = [];
+                entryArray.entries.forEach(entry => {
+                    entries.push(entry)
+                    displayJournalEntry.displayJournalEntry(entry)
+                })
+            })
+        })
+    })
+}
+
+function addSearchEventListener() {
+        document.getElementById("searchInput").addEventListener("keypress", () => {
+        // event.preventDefault()
+        // console.log(event)
+        let input = event.target.value;
+        if(event.key === "Enter") {
+            event.preventDefault()
+            // console.log("He hit enter")
+            API.getJournalEntries()
+            .then(object => {
+                // console.log(object)
+                document.getElementById('journalEntries').innerHTML = ""
+                for (const values of Object.values(object)) {
+                    let shouldDisplay = false
+                    for (const value of Object.values(values)) {
+                        let newValue = `${value}`
+                        // console.log(value)
+                        // console.log(newValue)
+                        // console.log(newValue.includes(input))
+                        if (newValue.includes(input)) {
+                            shouldDisplay = true
+                        }
+                    }
+                    if (shouldDisplay) {
+                        displayJournalEntry.displayJournalEntry(values)
+                    }
+                }
+
+            })
+        }
+
+    })
+}
+
+export default {API, entries, journalEntry, journalEntry1, journalEntry2, fillForm, addSearchEventListener, addMoodSortEventListener}

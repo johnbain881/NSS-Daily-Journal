@@ -1,58 +1,66 @@
+import API from "./data.js"
+
 function buildForm() {
-    document.getElementById("form-to-build").innerHTML = 
-    `<fieldset>
+    let htmlString1 = `        <fieldset>
     <input type="text" name="idValue" id="idValue" class="hidden">
     <label for="journalDate">Date of entry</label>
     <input type="date" name="journalDate" id="journalDate">
 </fieldset>
 <fieldset>
-    <label for="journalEntryTitle">Concepts covered</label>
-    <input type="text" name="entryTitle" id="entryTitle">
+<label for="journalEntryTitle">Concepts covered</label>
+<input type="text" name="entryTitle" id="entryTitle">
 </fieldset>
 <fieldset>
-    <label for="journalEntry">Journal Entry</label>
-    <textarea name="journalEntry" id="journalEntry" cols="30" rows="3"></textarea>
+<label for="journalEntry">Journal Entry</label>
+<textarea name="journalEntry" id="journalEntry" cols="30" rows="3"></textarea>
 </fieldset>
 <fieldset>
-    <label for="journalMood">Mood for the day</label>
-    <select name="journalMood" id="journalMood">
-        <option value="Happy">Happy</option>
-        <option value="Sad">Sad</option>
-        <option value="Funny">Funny</option>
-        <option value="Bored">Bored</option>
-        <option value="Excited">Excited</option>
-        <option value="Gloomy">Gloomy</option>
-    </select>
-</fieldset>
+<label for="journalMood">Mood for the day</label>
+<select name="journalMood" id="journalMood">`
+API.API.getJournalMoods()
+.then(moodObject => {
+    for (const object of Object.values(moodObject)) {
+        htmlString1 += `<option value=${object.id}>${object.mood}</option>`
+    }
+    htmlString1 += ` </select>
+    </fieldset>`
+    document.getElementById("form-to-build").innerHTML = htmlString1
+})
 
-`
-document.getElementById("other-form-to-build").innerHTML = `
-<div id="entriesSort">
+
+{/* <div id="entriesSort">
 <fieldset id="moodFilter">
 <legend>
 Filter Journal Entries By Mood
-</legend>
-    <input type="radio" id="Happy" name="Mood" class="Mood" value="Happy">
-    <label for="Happy">Happy</label>
-    <input type="radio" id="Sad" name="Mood" class="Mood" value="Sad">
-    <label for="Sad">Sad</label>
-    <input type="radio" id="Funny" name="Mood" class="Mood" value="Funny">
-    <label for="Funny">Funny</label>
-    <input type="radio" id="Bored" name="Mood" class="Mood" value="Bored">
-    <label for="Bored">Bored</label>
-    <input type="radio" id="Excited" name="Mood" class="Mood" value="Excited">
-    <label for="Excited">Excited</label>
-    <input type="radio" id="Gloomy" name="Mood" class="Mood" value="Gloomy">
-    <label for="Gloomy">Gloomy</label>
-</fieldset>
-<fieldset>
+</legend> */}
+
+let htmlString2 = `<div id="entriesSort">
+<fieldset id="moodFilter">
 <legend>
-    Search Journal Entries
-</legend>
-    <input type="text" name="searchInput" id="searchInput">
-</fieldset>
-</div>
-`
+Filter Journal Entries By Mood
+</legend>`
+
+API.API.getJournalMoods()
+.then(moodObject => {
+    for (const object of Object.values(moodObject)) {
+        htmlString2 += `
+        <input type="radio" id="${object.mood}" name="Mood" class="Mood" value=${object.id}>
+        <label for="${object.mood}">${object.mood}</label>`
+    }
+    htmlString2 +=`</fieldset>
+    <fieldset>
+    <legend>
+        Search Journal Entries
+    </legend>
+        <input type="text" name="searchInput" id="searchInput">
+    </fieldset>
+    </div>`
+    document.getElementById("other-form-to-build").innerHTML = htmlString2
+    API.addSearchEventListener()
+    API.addMoodSortEventListener()
+})
+
+
 
 }
 

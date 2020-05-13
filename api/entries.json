@@ -2,45 +2,71 @@
   "entries": [
     {
       "id": 1,
-      "date": "4-17-20",
+      "date": "2020-05-05",
       "entryTitle": "Finally!",
       "entry": "I have been anticipating starting JavaScript, because it is so much fun!",
-      "mood": "Motivated"
+      "moodId": 5
     },
     {
       "id": 2,
-      "date": "4-17-20",
+      "date": "2020-05-05",
       "entryTitle": "Long Day",
       "entry": "I woke up pretty early this morning, and I'm pretty tired.",
-      "mood": "Tired"
+      "moodId": 4
     },
     {
       "date": "2020-05-05",
       "entryTitle": "asdf",
       "entry": "asdf",
-      "mood": "",
+      "moodId": 1,
       "id": 3
     },
     {
       "date": "2020-05-06",
       "entryTitle": "JSON",
       "entry": "We learned some JSON today and it was pretty cool",
-      "mood": "Happy",
+      "moodId": 1,
       "id": 4
     },
     {
       "date": "2020-05-19",
       "entryTitle": "PUT",
       "entry": "I am trying to learn PUT today",
-      "mood": "Funny",
+      "moodId": 3,
       "id": 5
     },
     {
       "date": "2020-05-05",
       "entryTitle": "asdf",
-      "entry": "asdf",
-      "mood": "Happy",
+      "entry": "asdfasdfasdfasdfasdfadfadfasdfsafasasdfsdf",
+      "moodId": 2,
       "id": 6
+    }
+  ],
+  "moods": [
+    {
+      "id": 1,
+      "mood": "Happy"
+    },
+    {
+      "id": 2,
+      "mood": "Sad"
+    },
+    {
+      "id": 3,
+      "mood": "Funny"
+    },
+    {
+      "id": 4,
+      "mood": "Bored"
+    },
+    {
+      "id": 5,
+      "mood": "Excited"
+    },
+    {
+      "id": 6,
+      "mood": "Gloomy"
     }
   ]
 }
